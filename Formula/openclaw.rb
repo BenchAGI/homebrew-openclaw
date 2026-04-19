@@ -1,35 +1,30 @@
 # Homebrew formula for OpenClaw — Bench's multi-channel AI gateway.
 #
-# Canonical home for this formula is the dedicated tap repo
-# github.com/BenchAGI/homebrew-openclaw (tap directive: `brew tap
-# benchagi/openclaw`). This copy lives in the monorepo so the formula
-# evolves with the rest of the deploy pipeline; CI copies it to the tap
-# repo when a release cuts.
-#
 # Install (end-user):
 #   brew tap benchagi/openclaw
-#   brew install openclaw
+#   brew install benchagi/openclaw/openclaw
 #
-# Upgrade: `brew upgrade openclaw` (the formula's `url` pin on tag means
-# `brew` knows when a newer release is available).
+# Note the tap-prefixed install command: an unrelated `openclaw` cask exists
+# in homebrew-cask (an old WarCraft-style game remake) that collides on the
+# short name, so bare `brew install openclaw` resolves to the cask. Always
+# use the fully qualified name to disambiguate.
 #
-# See docs/homebrew-tap-setup.md for the tap repo bootstrap + release flow.
+# Source: the public `openclaw` npm package (upstream), which ships with
+# pre-built `dist/`. Once we publish the BenchAGI fork to npm as
+# @benchagi/openclaw, this formula switches over and picks up the
+# memory-wiki and other Bench-specific patches. For now the install path
+# is npm-upstream to give users a working gateway today.
 class Openclaw < Formula
   desc "Multi-channel AI gateway with extensible messaging integrations"
   homepage "https://github.com/BenchAGI/openclaw"
-  url "https://github.com/BenchAGI/openclaw/archive/refs/tags/v2026.4.18.tar.gz"
-  sha256 "0be31497ab5946d5b3489f6a5823d127659c7160aa705ca87e04ef0ca70cd601"
+  url "https://registry.npmjs.org/openclaw/-/openclaw-2026.4.15.tgz"
+  sha256 "8c95f77538130c77967c970da4744786c4d5b773937b8208f622efb4cf0d2564"
   license "MIT"
-  head "https://github.com/BenchAGI/openclaw.git", branch: "main"
 
   depends_on "node"
 
   def install
-    # std_npm_args handles the libexec + PATH wiring that Homebrew expects
-    # for Node-based CLIs; we then symlink the `openclaw` binary from the
-    # libexec install tree into Homebrew's bin directory so users get it
-    # on their PATH without extra config.
-    system "npm", "install", *std_npm_args(prefix: false)
+    system "npm", "install", *std_npm_args
     bin.install_symlink Dir["#{libexec}/bin/*"]
   end
 
@@ -45,6 +40,11 @@ class Openclaw < Formula
 
       Config lives in ~/.openclaw/openclaw.json — Bench's deploy runbooks
       document the shape of that file per role (Aurelius, Cole, Sage, etc).
+
+      Name collision note: always use the fully qualified name to install or
+      upgrade (an unrelated openclaw cask exists in homebrew-cask):
+        brew install benchagi/openclaw/openclaw
+        brew upgrade benchagi/openclaw/openclaw
     EOS
   end
 
