@@ -17,8 +17,8 @@
 class Openclaw < Formula
   desc "Multi-channel AI gateway with extensible messaging integrations"
   homepage "https://github.com/BenchAGI/openclaw"
-  url "https://registry.npmjs.org/openclaw/-/openclaw-2026.4.15.tgz"
-  sha256 "8c95f77538130c77967c970da4744786c4d5b773937b8208f622efb4cf0d2564"
+  url "https://registry.npmjs.org/openclaw/-/openclaw-2026.4.26.tgz"
+  sha256 "a1c0b9d417003b302d6c63bfc93d015784ad4b6a4a1360d1814ee1f5928ce3b4"
   license "MIT"
 
   depends_on "node"
