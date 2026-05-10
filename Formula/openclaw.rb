@@ -1,8 +1,15 @@
 # Homebrew formula for OpenClaw — Bench's multi-channel AI gateway.
 #
-# Install (end-user):
-#   brew tap benchagi/openclaw
-#   brew install benchagi/openclaw/openclaw
+# DEPRECATED: this tap (benchagi/openclaw) has been superseded by the
+# canonical multi-formula tap benchagi/tap. Migrate with:
+#
+#   brew untap benchagi/openclaw
+#   brew tap benchagi/tap
+#   brew install benchagi/tap/openclaw
+#
+# This formula is kept in place to avoid breaking existing users who
+# already tapped benchagi/openclaw, but new users should use the
+# canonical tap. See https://github.com/BenchAGI/homebrew-tap.
 #
 # Note the tap-prefixed install command: an unrelated `openclaw` cask exists
 # in homebrew-cask (an old WarCraft-style game remake) that collides on the
@@ -20,6 +27,8 @@ class Openclaw < Formula
   license "MIT"
   version "2026.5.7"
 
+  deprecate! date: "2026-04-20", because: "this tap moved to benchagi/tap; run `brew untap benchagi/openclaw && brew tap benchagi/tap && brew install benchagi/tap/openclaw`"
+
   depends_on "node"
   depends_on "pnpm" => :build
 
@@ -33,7 +42,13 @@ class Openclaw < Formula
 
   def caveats
     <<~EOS
-      Next steps:
+      This tap (benchagi/openclaw) is DEPRECATED. Migrate to benchagi/tap:
+
+        brew untap benchagi/openclaw
+        brew tap benchagi/tap
+        brew install benchagi/tap/openclaw
+
+      After install, next steps:
         1. Authorize OpenClaw with your default model provider:
              openclaw models auth login
         2. Start the gateway (defaults to localhost:18789):
@@ -43,11 +58,6 @@ class Openclaw < Formula
 
       Config lives in ~/.openclaw/openclaw.json — Bench's deploy runbooks
       document the shape of that file per role (Aurelius, Cole, Sage, etc).
-
-      Name collision note: always use the fully qualified name to install or
-      upgrade (an unrelated openclaw cask exists in homebrew-cask):
-        brew install benchagi/openclaw/openclaw
-        brew upgrade benchagi/openclaw/openclaw
     EOS
   end
 
