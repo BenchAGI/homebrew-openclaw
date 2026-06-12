@@ -25,4 +25,8 @@ The `openclaw` formula has been removed from this tap. `tap_migrations.json` map
 canonical tap automatically on `brew update && brew upgrade` — no manual untap required
 (though the explicit migration above is still the cleanest path).
 
+This repository is now a migration stub with no Formula or source code. CodeQL default
+setup is intentionally disabled here; security scanning for the `openclaw` formula now
+runs in the canonical `benchagi/tap` repository.
+
 The BenchAGI team plans to archive this repo after end-to-end verification of the new tap. Migrate now to avoid the archive cutover.
