@@ -18,8 +18,11 @@ The canonical tap lives at [BenchAGI/homebrew-tap](https://github.com/BenchAGI/h
 - Aligns with the BenchAGI launch-readiness drift check (`tier-b-installer-available`), which expects `brew tap benchagi/tap` to resolve
 - Scales: no new tap repo per tool
 
-## Still here
+## Automatic migration
 
-The `openclaw` formula remains in `Formula/openclaw.rb` so existing tappers don't hit a resolution error. It is marked `deprecate!` with a pointer to the new tap, so `brew install` or `brew upgrade` will print a migration notice.
+The `openclaw` formula has been removed from this tap. `tap_migrations.json` maps
+`openclaw` → `benchagi/tap/openclaw`, so existing installs from this tap migrate to the
+canonical tap automatically on `brew update && brew upgrade` — no manual untap required
+(though the explicit migration above is still the cleanest path).
 
 The BenchAGI team plans to archive this repo after end-to-end verification of the new tap. Migrate now to avoid the archive cutover.
