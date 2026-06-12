@@ -1,31 +1,25 @@
-# homebrew-openclaw
+# homebrew-openclaw — DEPRECATED
 
-Homebrew tap for [OpenClaw](https://github.com/BenchAGI/openclaw) — Bench's multi-channel AI gateway.
+> **This tap is deprecated.** Use the canonical `benchagi/tap` instead.
 
-## Install
-
-```bash
-brew tap benchagi/openclaw
-brew install openclaw
-```
-
-Then:
+## Migrate
 
 ```bash
-openclaw models auth login         # authorize a default model provider
-openclaw gateway start             # start the local gateway on :18789
-curl http://localhost:18789/health # verify
+brew untap benchagi/openclaw
+brew tap benchagi/tap
+brew install benchagi/tap/openclaw
 ```
 
-## Upgrading
+The canonical tap lives at [BenchAGI/homebrew-tap](https://github.com/BenchAGI/homebrew-tap). It follows the Homebrew multi-formula convention (same pattern as `hashicorp/tap`, `aws/tap`) and will host all future BenchAGI formulae.
 
-```bash
-brew update
-brew upgrade openclaw
-```
+## Why the move
 
-## Source
+- Matches Homebrew convention for org-level taps with multiple formulae
+- Aligns with the BenchAGI launch-readiness drift check (`tier-b-installer-available`), which expects `brew tap benchagi/tap` to resolve
+- Scales: no new tap repo per tool
 
-Formula source of truth lives in the BenchAGI monorepo at [`tools/homebrew/openclaw.rb`](https://github.com/BenchAGI/BenchAGI_Mono_Repo/blob/main/tools/homebrew/openclaw.rb). This tap's `Formula/openclaw.rb` mirrors it on each release, with the SHA256 pinned to the release tarball.
+## Still here
 
-The OpenClaw source is at [BenchAGI/openclaw](https://github.com/BenchAGI/openclaw).
+The `openclaw` formula remains in `Formula/openclaw.rb` so existing tappers don't hit a resolution error. It is marked `deprecate!` with a pointer to the new tap, so `brew install` or `brew upgrade` will print a migration notice.
+
+The BenchAGI team plans to archive this repo after end-to-end verification of the new tap. Migrate now to avoid the archive cutover.
